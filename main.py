@@ -1,13 +1,20 @@
 import urllib.request
+import os
 
 
-def downlaod(url, FILE):
+def download(url, FILE):
+    # if file is exists open the fiml file return contents
+    # else crawl adnd return the content
+    if os.path.exists(FILE):
+        with open(FILE, 'rb') as fp:
+            return fp.read()
 
     response = urllib.request.urlopen(url)
     print(response.status)
     responsetext = response.read()
-    with open('status.html', 'wb') as fp:
-    fp.write(responsetext)
+
+    with open(FILE, 'wb') as filepointer:
+        filepointer.write(responsetext)
 
     return responsetext
 
@@ -24,5 +31,5 @@ def downlaod(url, FILE):
 
 
 page = download(
-    url="http://en.wikipedia.org/wiki/List_of_HTTP_status_codes"
-    FILE="status.html")
+    url="http://en.wikipedia.org/wiki/List_of_HTTP_status_codes",
+    FILE="status.html",)
